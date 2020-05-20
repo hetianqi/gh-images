@@ -1,0 +1,39 @@
+const args: string[] = process.argv;
+
+// 校验参数个数
+if (args.length !== 2) {
+    throw new Error('Invalid input.');
+}
+
+const input = args[1];
+
+if (!input.length || input.length > 100) {
+    throw new Error('Invalid input.');
+}
+
+let output = '';
+let lastChar = '';
+let lastCharCount = 0;
+
+for (const char of input) {
+    // 每个字符都必须为普通英文字符
+    if (char < 'a' || char > 'Z') {
+        throw new Error('Invalid input.');
+    }
+    
+    if (char !== lastChar) {
+        if (lastChar) {
+            output = `${lastChar}${lastCharCount}`;
+        }
+        
+        lastChar = char;
+        lastCharCount = 1;
+    } else {
+        lastCharCount++;
+    }
+}
+
+// 处理最后一个字符
+output = `${lastChar}${lastCharCount}`;
+
+console.log(output);
